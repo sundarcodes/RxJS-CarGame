@@ -1,22 +1,25 @@
-var pos = 0;
+function moveLeft(pos) {
+  return Object.assign({}, {left:parseInt(pos.left)-10, top:pos.top});
+}
 
-// moveLeft(pos){}
+function moveRight(pos) {
+  return Object.assign({}, {left:parseInt(pos.left)+10, top:pos.top});
+}
 
 var keyDown = Rx.Observable.fromEvent(document, 'keydown')
 .map(e => e.keyCode)
 .filter(code => code === 37)
-// .mapTo(posi => console.log(posi))
-.map(pos => )
-.scan(pos => pos - 10, pos)
+.mapTo((pos) => moveLeft(pos));
+
 
 var keyUp = Rx.Observable.fromEvent(document, 'keydown')
 .map(e => e.keyCode)
 .filter(code => code === 39)
-.scan(pos => pos + 10, pos)
+.mapTo((pos) => moveRight(pos));
 
 
 Rx.Observable.merge(keyDown,keyUp)
+.scan((pos,move) => move(pos), {left:10,top:5})
 .subscribe(pos => {
-  console.log(pos);
-  $('#car').css('left',pos + 'px');
+  $('#car').css('left',pos.left + 'px');
 })

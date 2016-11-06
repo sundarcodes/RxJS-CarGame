@@ -13,4 +13,5 @@
   position: absolute;
   background-image: url('./images/car.JPG');
   background-size: cover;
+  transition: all 0.2s ease-in;
 }
